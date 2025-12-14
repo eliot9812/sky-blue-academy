@@ -33,36 +33,22 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled
-          ? 'bg-card/95 backdrop-blur-md shadow-md py-2'
-          : 'bg-transparent py-4'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-primary shadow-md',
+        isScrolled ? 'py-2' : 'py-4'
       )}
     >
       <div className="container-custom mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105",
-              isScrolled ? "bg-primary" : "bg-card/90"
-            )}>
-              <GraduationCap className={cn(
-                "w-7 h-7 transition-colors",
-                isScrolled ? "text-primary-foreground" : "text-primary"
-              )} />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105 bg-card/90">
+              <GraduationCap className="w-7 h-7 transition-colors text-primary" />
             </div>
             <div>
-              <h1 className={cn(
-                "font-heading font-bold text-xl transition-colors",
-                isScrolled ? "text-foreground" : "text-card"
-              )}>
+              <h1 className="font-heading font-bold text-xl transition-colors text-primary-foreground">
                 Sunrise Academy
               </h1>
-              <p className={cn(
-                "text-xs font-medium transition-colors",
-                isScrolled ? "text-muted-foreground" : "text-card/80"
-              )}>
+              <p className="text-xs font-medium transition-colors text-primary-foreground/80">
                 Excellence in Education
               </p>
             </div>
@@ -77,12 +63,8 @@ const Header = () => {
                 className={cn(
                   'px-4 py-2 rounded-lg font-medium transition-all duration-200',
                   location.pathname === link.path
-                    ? isScrolled
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-card text-primary'
-                    : isScrolled
-                    ? 'text-foreground hover:bg-accent'
-                    : 'text-card hover:bg-card/20'
+                    ? 'bg-card text-primary'
+                    : 'text-primary-foreground hover:bg-primary-foreground/20'
                 )}
               >
                 {link.name}
@@ -94,15 +76,12 @@ const Header = () => {
           <div className="hidden lg:flex items-center gap-4">
             <a
               href="tel:+1234567890"
-              className={cn(
-                "flex items-center gap-2 font-medium transition-colors",
-                isScrolled ? "text-foreground" : "text-card"
-              )}
+              className="flex items-center gap-2 font-medium transition-colors text-primary-foreground"
             >
               <Phone className="w-4 h-4" />
               <span>+1 234 567 890</span>
             </a>
-            <Button variant={isScrolled ? "maroon" : "hero"} asChild>
+            <Button variant="secondary" asChild>
               <Link to="/admission">Apply Now</Link>
             </Button>
           </div>
@@ -110,12 +89,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={cn(
-              "lg:hidden p-2 rounded-lg transition-colors",
-              isScrolled
-                ? "text-foreground hover:bg-accent"
-                : "text-card hover:bg-card/20"
-            )}
+            className="lg:hidden p-2 rounded-lg transition-colors text-primary-foreground hover:bg-primary-foreground/20"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -146,7 +120,7 @@ const Header = () => {
             </Link>
           ))}
           <div className="pt-4 border-t border-border mt-2">
-            <Button variant="maroon" className="w-full" asChild>
+            <Button variant="secondary" className="w-full" asChild>
               <Link to="/admission">Apply Now</Link>
             </Button>
           </div>
