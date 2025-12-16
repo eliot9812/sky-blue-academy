@@ -1,19 +1,29 @@
 import { useState } from 'react';
-import { Lock, User, LayoutDashboard, Bell, Image, LogOut, Mail, Users, FileText } from 'lucide-react';
+import { Lock, User, LayoutDashboard, Bell, Image, LogOut, Mail, Users, FileText, Plus, X, Trash2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 const AdminPanel = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [showAddImageForm, setShowAddImageForm] = useState(false);
+  const [newImage, setNewImage] = useState({ file: null as File | null, description: '' });
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (credentials.username && credentials.password) {
       setIsLoggedIn(true);
     }
+  };
+
+  const handleAddImage = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle image upload logic here
+    setShowAddImageForm(false);
+    setNewImage({ file: null, description: '' });
   };
 
   if (!isLoggedIn) {
@@ -225,39 +235,16 @@ const AdminPanel = () => {
           {/* Gallery Management Tab */}
           <TabsContent value="gallery">
             <div className="space-y-6">
-              {/* Upload New Image Section */}
-              <Card variant="elevated">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Image className="w-5 h-5 text-indigo-700" />
-                    Upload New Image
-                  </CardTitle>
-                  <CardDescription>Add new images to the gallery</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-indigo-500 transition-colors cursor-pointer">
-                      <Image className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
-                      <p className="text-xs text-muted-foreground">PNG, JPG up to 10MB</p>
-                      <Input type="file" className="hidden" accept="image/*" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Image Description
-                      </label>
-                      <Input 
-                        placeholder="Enter image description (e.g., Annual Sports Day 2024)"
-                        className="w-full"
-                      />
-                    </div>
-                    <Button className="w-full bg-indigo-700 hover:bg-indigo-800 text-white">
-                      <Image className="w-4 h-4 mr-2" />
-                      Upload Image
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Add Image Button */}
+              <div className="flex justify-end">
+                <Button 
+                  className="bg-indigo-700 hover:bg-indigo-800 text-white"
+                  onClick={() => setShowAddImageForm(true)}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Image
+                </Button>
+              </div>
 
               {/* View Images Section */}
               <Card variant="elevated">
@@ -282,8 +269,14 @@ const AdminPanel = () => {
                         <div className="relative aspect-video bg-muted flex items-center justify-center">
                           <Image className="w-12 h-12 text-muted-foreground" />
                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <Button variant="outline" size="sm" className="bg-white">Edit</Button>
-                            <Button variant="destructive" size="sm">Delete</Button>
+                            <Button variant="outline" size="sm" className="bg-white">
+                              <Eye className="w-3 h-3 mr-1" />
+                              View
+                            </Button>
+                            <Button variant="destructive" size="sm">
+                              <Trash2 className="w-3 h-3 mr-1" />
+                              Delete
+                            </Button>
                           </div>
                         </div>
                         <div className="p-3 bg-card">
@@ -321,6 +314,10 @@ const AdminPanel = () => {
                       <div className="flex gap-2 mt-3">
                         <Button variant="outline" size="sm">Reply</Button>
                         <Button variant="ghost" size="sm">Mark as Read</Button>
+                        <Button variant="destructive" size="sm">
+                          <Trash2 className="w-3 h-3 mr-1" />
+                          Delete
+                        </Button>
                       </div>
                     </div>
                     <div className="p-4">
@@ -333,6 +330,10 @@ const AdminPanel = () => {
                       <div className="flex gap-2 mt-3">
                         <Button variant="outline" size="sm">Reply</Button>
                         <Button variant="ghost" size="sm">Mark as Read</Button>
+                        <Button variant="destructive" size="sm">
+                          <Trash2 className="w-3 h-3 mr-1" />
+                          Delete
+                        </Button>
                       </div>
                     </div>
                     <div className="p-4">
@@ -345,6 +346,10 @@ const AdminPanel = () => {
                       <div className="flex gap-2 mt-3">
                         <Button variant="outline" size="sm">Reply</Button>
                         <Button variant="ghost" size="sm">Mark as Read</Button>
+                        <Button variant="destructive" size="sm">
+                          <Trash2 className="w-3 h-3 mr-1" />
+                          Delete
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -354,6 +359,52 @@ const AdminPanel = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Add Image Dialog */}
+      <Dialog open={showAddImageForm} onOpenChange={setShowAddImageForm}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Image className="w-5 h-5 text-indigo-700" />
+              Add New Image
+            </DialogTitle>
+            <DialogDescription>Upload an image and add a description</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleAddImage} className="space-y-4">
+            <div className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-6 text-center hover:border-indigo-500 transition-colors cursor-pointer">
+              <Image className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+              <p className="text-sm text-muted-foreground mb-1">Click to upload or drag and drop</p>
+              <p className="text-xs text-muted-foreground">PNG, JPG up to 10MB</p>
+              <Input 
+                type="file" 
+                className="hidden" 
+                accept="image/*"
+                onChange={(e) => setNewImage({ ...newImage, file: e.target.files?.[0] || null })}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Image Description
+              </label>
+              <Input 
+                placeholder="Enter image description"
+                value={newImage.description}
+                onChange={(e) => setNewImage({ ...newImage, description: e.target.value })}
+                required
+              />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button type="button" variant="outline" onClick={() => setShowAddImageForm(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" className="bg-indigo-700 hover:bg-indigo-800 text-white">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Image
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
