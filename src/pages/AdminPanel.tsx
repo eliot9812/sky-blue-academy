@@ -224,35 +224,78 @@ const AdminPanel = () => {
 
           {/* Gallery Management Tab */}
           <TabsContent value="gallery">
-            <Card variant="elevated">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Image className="w-5 h-5 text-indigo-700" />
-                  Gallery Management
-                </CardTitle>
-                <CardDescription>Upload and manage gallery images</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                      <div key={item} className="relative group">
-                        <div className="aspect-square bg-muted rounded-lg flex items-center justify-center">
-                          <Image className="w-8 h-8 text-muted-foreground" />
+            <div className="space-y-6">
+              {/* Upload New Image Section */}
+              <Card variant="elevated">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Image className="w-5 h-5 text-indigo-700" />
+                    Upload New Image
+                  </CardTitle>
+                  <CardDescription>Add new images to the gallery</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-indigo-500 transition-colors cursor-pointer">
+                      <Image className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                      <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
+                      <p className="text-xs text-muted-foreground">PNG, JPG up to 10MB</p>
+                      <Input type="file" className="hidden" accept="image/*" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Image Description
+                      </label>
+                      <Input 
+                        placeholder="Enter image description (e.g., Annual Sports Day 2024)"
+                        className="w-full"
+                      />
+                    </div>
+                    <Button className="w-full bg-indigo-700 hover:bg-indigo-800 text-white">
+                      <Image className="w-4 h-4 mr-2" />
+                      Upload Image
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* View Images Section */}
+              <Card variant="elevated">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Image className="w-5 h-5 text-indigo-700" />
+                    View Gallery Images
+                  </CardTitle>
+                  <CardDescription>Manage existing gallery images</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[
+                      { id: 1, description: 'Annual Sports Day 2024' },
+                      { id: 2, description: 'Science Exhibition' },
+                      { id: 3, description: 'Cultural Program' },
+                      { id: 4, description: 'Independence Day Celebration' },
+                      { id: 5, description: 'Parent-Teacher Meeting' },
+                      { id: 6, description: 'Art Competition' },
+                    ].map((item) => (
+                      <div key={item.id} className="border rounded-lg overflow-hidden group">
+                        <div className="relative aspect-video bg-muted flex items-center justify-center">
+                          <Image className="w-12 h-12 text-muted-foreground" />
+                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <Button variant="outline" size="sm" className="bg-white">Edit</Button>
+                            <Button variant="destructive" size="sm">Delete</Button>
+                          </div>
                         </div>
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                          <Button variant="destructive" size="sm">Delete</Button>
+                        <div className="p-3 bg-card">
+                          <p className="text-sm font-medium text-foreground">{item.description}</p>
+                          <p className="text-xs text-muted-foreground mt-1">Uploaded: Dec 10, 2024</p>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <Button className="w-full bg-indigo-700 hover:bg-indigo-800 text-white">
-                    <Image className="w-4 h-4 mr-2" />
-                    Upload Images
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           {/* Contact Messages Tab */}
