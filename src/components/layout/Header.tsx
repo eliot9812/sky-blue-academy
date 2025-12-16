@@ -33,7 +33,10 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-primary shadow-md',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-xl',
+        // --- COLOR CHANGES FOR BLUE THEME ---
+        // Header background is now a strong blue (e.g., Indigo 700)
+        'bg-indigo-700',
         isScrolled ? 'py-2' : 'py-4'
       )}
     >
