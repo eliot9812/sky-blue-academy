@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 const galleryImages = [
   { id: 1, src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600', alt: 'Classroom learning', category: 'Campus' },
@@ -21,12 +22,34 @@ const galleryImages = [
 const categories = ['All', 'Campus', 'Activities', 'Events'];
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filteredImages = activeCategory === 'All'
     ? galleryImages
     : galleryImages.filter((img) => img.category === activeCategory);
+
+  const selectedImage = selectedImageIndex !== null ? filteredImages[selectedImageIndex] : null;
+
+  const handlePrevious = () => {
+    if (selectedImageIndex !== null && selectedImageIndex > 0) {
+      setSelectedImageIndex(selectedImageIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (selectedImageIndex !== null && selectedImageIndex < filteredImages.length - 1) {
+      setSelectedImageIndex(selectedImageIndex + 1);
+    }
+  };
+
+  const openLightbox = (index: number) => {
+    setSelectedImageIndex(index);
+  };
+
+  const closeLightbox = () => {
+    setSelectedImageIndex(null);
+  };
 
   return (
     <Layout>
@@ -67,13 +90,13 @@ const Gallery = () => {
 
           {/* Image Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredImages.map((image, index) => (
-              <div
-                key={image.id}
-                className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer animate-scale-in shadow-md"
-                style={{ animationDelay: `${index * 0.05}s` }}
-                onClick={() => setSelectedImage(image)}
-              >
+              {filteredImages.map((image, index) => (
+                <div
+                  key={image.id}
+                  className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer animate-scale-in shadow-md"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                  onClick={() => openLightbox(index)}
+                >
                 <img
                   src={image.src}
                   alt={image.alt}
@@ -95,14 +118,39 @@ const Gallery = () => {
       {selectedImage && (
         <div
           className="fixed inset-0 z-50 bg-foreground/95 flex items-center justify-center p-4 animate-fade-in"
-          onClick={() => setSelectedImage(null)}
+          onClick={closeLightbox}
         >
-          <button
-            className="absolute top-4 right-4 w-12 h-12 rounded-full bg-card/10 flex items-center justify-center text-card hover:bg-card/20 transition-colors"
-            onClick={() => setSelectedImage(null)}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4 w-12 h-12 rounded-full bg-card/10 text-card hover:bg-card/20"
+            onClick={closeLightbox}
           >
             <X className="w-6 h-6" />
-          </button>
+          </Button>
+          
+          {/* Previous Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-card/10 text-card hover:bg-card/20 disabled:opacity-30"
+            onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
+            disabled={selectedImageIndex === 0}
+          >
+            <ChevronLeft className="w-8 h-8" />
+          </Button>
+          
+          {/* Next Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-card/10 text-card hover:bg-card/20 disabled:opacity-30"
+            onClick={(e) => { e.stopPropagation(); handleNext(); }}
+            disabled={selectedImageIndex === filteredImages.length - 1}
+          >
+            <ChevronRight className="w-8 h-8" />
+          </Button>
+          
           <div className="max-w-5xl max-h-[90vh] animate-scale-in" onClick={(e) => e.stopPropagation()}>
             <img
               src={selectedImage.src.replace('w=600', 'w=1200')}
@@ -112,6 +160,7 @@ const Gallery = () => {
             <div className="text-center mt-4">
               <span className="text-xs font-medium text-primary bg-card/10 px-3 py-1 rounded-full">{selectedImage.category}</span>
               <h3 className="text-card font-medium mt-2 text-lg">{selectedImage.alt}</h3>
+              <p className="text-card/60 text-sm mt-1">{selectedImageIndex !== null ? selectedImageIndex + 1 : 0} / {filteredImages.length}</p>
             </div>
           </div>
         </div>
