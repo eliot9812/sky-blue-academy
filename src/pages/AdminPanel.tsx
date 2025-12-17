@@ -109,15 +109,24 @@ const AdminPanel = () => {
         {/* Tabs for Notice, Gallery, Contact */}
         <Tabs defaultValue="notices" className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="notices" className="flex items-center gap-2">
+            <TabsTrigger 
+              value="notices" 
+              className="flex items-center gap-2 text-[#4338ca] hover:text-[#6088e1] data-[state=active]:bg-[#4338ca] data-[state=active]:text-white"
+            >
               <Bell className="w-4 h-4" />
               Notices
             </TabsTrigger>
-            <TabsTrigger value="gallery" className="flex items-center gap-2">
+            <TabsTrigger 
+              value="gallery" 
+              className="flex items-center gap-2 text-[#4338ca] hover:text-[#6088e1] data-[state=active]:bg-[#4338ca] data-[state=active]:text-white"
+            >
               <Image className="w-4 h-4" />
               Gallery
             </TabsTrigger>
-            <TabsTrigger value="contact" className="flex items-center gap-2">
+            <TabsTrigger 
+              value="contact" 
+              className="flex items-center gap-2 text-[#4338ca] hover:text-[#6088e1] data-[state=active]:bg-[#4338ca] data-[state=active]:text-white"
+            >
               <Mail className="w-4 h-4" />
               Contact
             </TabsTrigger>
