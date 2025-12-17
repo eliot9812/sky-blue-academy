@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Lock, User, LayoutDashboard, Bell, Image, LogOut, Mail, Users, FileText, Plus, X, Trash2, Eye } from 'lucide-react';
+import { Lock, User, LayoutDashboard, Bell, Image, LogOut, Mail, FileText, Plus, X, Trash2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -106,62 +106,6 @@ const AdminPanel = () => {
 
       {/* Admin Content */}
       <main className="container-custom mx-auto px-4 py-8">
-        {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card variant="elevated">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-muted-foreground text-sm">Total Students</p>
-                  <p className="text-3xl font-bold text-foreground font-heading">523</p>
-                </div>
-                <div className="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center">
-                  <Users className="w-6 h-6 text-indigo-700" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card variant="elevated">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-muted-foreground text-sm">Active Notices</p>
-                  <p className="text-3xl font-bold text-foreground font-heading">8</p>
-                </div>
-                <div className="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center">
-                  <Bell className="w-6 h-6 text-indigo-700" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card variant="elevated">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-muted-foreground text-sm">Gallery Images</p>
-                  <p className="text-3xl font-bold text-foreground font-heading">45</p>
-                </div>
-                <div className="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center">
-                  <Image className="w-6 h-6 text-indigo-700" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card variant="elevated">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-muted-foreground text-sm">Contact Messages</p>
-                  <p className="text-3xl font-bold text-foreground font-heading">12</p>
-                </div>
-                <div className="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-indigo-700" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Tabs for Notice, Gallery, Contact */}
         <Tabs defaultValue="notices" className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-6">
