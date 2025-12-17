@@ -12,6 +12,7 @@ import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <AdminKeyboardListener />
         <Routes>
           <Route path="/" element={<Index />} />
