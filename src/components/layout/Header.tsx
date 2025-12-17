@@ -66,8 +66,8 @@ const Header = () => {
                 className={cn(
                   'px-4 py-2 rounded-lg font-medium transition-all duration-200',
                   location.pathname === link.path
-                    ? 'bg-card text-secondary'
-                    : 'text-secondary hover:bg-secondary/10'
+                    ? 'bg-card text-primary'
+                    : 'text-primary-foreground hover:bg-primary-foreground/20'
                 )}
               >
                 {link.name}
